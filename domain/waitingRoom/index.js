@@ -1,4 +1,4 @@
-class AppointmentDomain {
+class WaitingRoomDomain {
     constructor(storage) {
         this.storage = storage;
     }
@@ -17,15 +17,16 @@ class AppointmentDomain {
         return waitingRooms;
     }
 
-    get(reference) {
-        const result = this.storage.get(`#${reference}`);
-        return {reference: `#${reference}`, ...result};
-    }
-
-    update(reference) {
-        const result = this.storage.get(`#${reference}`);
-        return {reference: `#${reference}`, ...result};
+    get(id) {
+        const results = this.storage.getAll();
+        const waitingRoom = [];
+        for (let reference in results) {
+            if (id === reference.charAt(1)) {
+                waitingRoom.push({reference, ...results[reference]});
+            }
+        }
+        return waitingRoom;
     }
 }
 
-module.exports.AppointmentDomain = AppointmentDomain;
+module.exports.WaitingRoomDomain = WaitingRoomDomain;

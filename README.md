@@ -5,5 +5,5 @@ Inspired by this [Github repository](https://github.com/javierlecca/nodejs-hexag
 First, run the development API server:
 
 ```bash
-yarn install && yarn start
+yarn install && yarn dev
 ```

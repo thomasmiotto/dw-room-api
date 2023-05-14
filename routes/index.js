@@ -1,33 +1,41 @@
 const express = require('express');
-const AppointmentDomain = require('../domain/appointment');
+const storage = require('../storage');
 
+const appointmentDomain = new (require('../domain/appointment').AppointmentDomain)(storage);
+const waitingRoomDomain = new (require('../domain/waitingRoom').WaitingRoomDomain)(storage);
 const router = express.Router();
 
-const computeResponse = (req, resp, data) => {
+const computeResponse = (resp, data) => {
     if(data === undefined) {
-        return req.status(404).send(resp)
+        return resp.status(404).send(undefined)
     }
     if(data === null) {
-        return req.status(204).send(resp);
+        return resp.status(204).send('{}');
     }
-    return req.status(200).send(resp);
+    return resp.status(200).send(data);
 }
 
-router.get('/appointments/', (req, resp) => {
-    const list = AppointmentDomain.list();
-    return computeResponse(req, resp, list);
+router.get('/waiting-rooms/', (req, resp) => {
+    const list = waitingRoomDomain.list();
+    return computeResponse(resp, list);
+});
+
+router.get('/waiting-rooms/:id', (req, resp) => {
+    const id = req.params.id;
+    const waitingRoom = waitingRoomDomain.get(id);
+    return computeResponse(resp, waitingRoom);
 });
 
 router.get('/appointments/:id', (req, resp) => {
     const id = req.params.id;
-    const appointment = AppointmentDomain.get(id);
-    return computeResponse(req, resp, appointment);
+    const appointment = appointmentDomain.get(id);
+    return computeResponse(resp, appointment);
 });
 
 router.patch('/appointments/:id', (req, resp) => {
     const id = req.params.id;
-    const appointment = AppointmentDomain.update(id);
-    return computeResponse(req, resp, appointment.id === id ? null : undefined);
+    const appointment = appointmentDomain.update(id);
+    return computeResponse(resp, appointment.id === id ? null : undefined);
 });
 
 const routers = (app) => {
