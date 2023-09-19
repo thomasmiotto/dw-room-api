@@ -38,8 +38,19 @@ router.patch('/appointments/:id', (req, resp) => {
     return computeResponse(resp, appointment.id === id ? null : undefined);
 });
 
+router.post('/appointments/', (req, resp) => {
+    const appointment = appointmentDomain.create(req.body);
+    console.log("here")
+    return computeResponse(resp, appointment);
+});
+
 const routers = (app) => {
     app.use('/api/v1', router);
 };
+
+
+
+test = "#C311,2 95 10 75 414 149,Jazmine Black, 287387937892789, mail@mail"
+appointmentDomain.create(test);
 
 module.exports = routers;

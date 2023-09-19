@@ -16,8 +16,25 @@ const AppointmentStorage = {
     },
     update : (id) => {
         return DATABASE.get(id);
-    }
-}
+    },
+    create: (data) => {
+       
+        // Ajoutez le rendez-vous à la base de données
+        fs.appendFile('./data.csv', data+"\r\n", 'utf8', (err) => {
+            if (err) {
+                console.error('Une erreur s\'est produite lors de l\'ajout de la ligne au fichier CSV :', err);
+            } else {
+                console.log('Ligne ajoutée avec succès au fichier CSV.');
+            }
+        });
+
+        // Renvoyez l'identifiant du rendez-vous créé
+        
+    },
+
+    // ... Vos autres méthodes existantes ...
+};
+
 
 const initStorage = (storage) => {
     const stream = fs.createReadStream('./data.csv');
