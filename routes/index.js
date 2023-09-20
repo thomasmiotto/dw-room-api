@@ -46,6 +46,12 @@ router.post("/waiting-rooms/", (req, resp) => {
 
 });
 
+router.post('/appointments/', (req, resp) => {
+    const appointment = appointmentDomain.create(req.body);
+    console.log("here")
+    return computeResponse(resp, appointment);
+});
+
 const routers = (app) => {
   app.use("/api/v1", router);
 };

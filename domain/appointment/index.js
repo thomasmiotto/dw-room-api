@@ -39,6 +39,7 @@ console.log(data);
     // Vérifiez que les données sont présentes
     if (!data || !nname || !email || !noSS || !number) {
       return null;
+
     }
 
 
