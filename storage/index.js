@@ -4,7 +4,6 @@ const readline = require("readline");
 const DATABASE = new Map();
 
 const AppointmentStorage = {
-
   getAll: () => {
     const results = {};
     DATABASE.forEach((value, key) => {
@@ -45,7 +44,6 @@ const AppointmentStorage = {
     // Renvoyez l'identifiant du rendez-vous créé
   },
 };
-
 
 const initStorage = (storage) => {
   const stream = fs.createReadStream("./data.csv");
